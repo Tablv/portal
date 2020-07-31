@@ -27,7 +27,7 @@
         @mouseleave.native="onmouseleavr($event)"
       >
         <div style="margin-top: 50px;">
-            <i :class="item.icon" style="font-size: 100px; color: #253959"></i>
+            <i :class="item.icon" style="font-size: 80px; color: #253959"></i>
         </div>
         <div style="color: #043469">
           <h4>{{item.name}}</h4>
@@ -91,7 +91,7 @@ export default {
     margin-bottom: 300px;
   }
   to {
-    margin-bottom: 0px;
+    margin-bottom: -50px;
   }
 }
 .box-card-no-margin {
@@ -99,7 +99,7 @@ export default {
 }
 .index-page {
   overflow: hidden;
-  margin-bottom: 300px;
+  margin-bottom: 270px;
 
   .carousel {
     background: url("../assets/bg.png");
@@ -135,7 +135,7 @@ export default {
     padding: 0 200px;
     margin-top: 20px;
     padding-top: 20px;
-    height: 300px;
+    height: 270px;
     display: grid;
     background: #f6f7fc;
     box-shadow: inset 0px 0px 15px #dddfe6;

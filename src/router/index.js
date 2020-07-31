@@ -24,8 +24,14 @@ export const constantRoutes = [
   },
   {
     path: '/404',
+    name: '404',
     component: () => import('@/views/404.vue'),
     hidden: true
+  },
+  {
+    path: '/*',
+    name: '*',
+    redirect: '/404'
   }
 ]
 
@@ -45,6 +51,11 @@ export function resetRouter() {
 router.selfaddRoutes = (params) => {
   router.matcher = new Router().matcher
   router.addRoutes(params)
+}
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
 }
 
 export default router

@@ -20,11 +20,11 @@ export default {
       menuList: [
         { key:'index', name: '首页' },
         { key:'product', name: '产品服务' },
-        { key:'fdfdfdf', name: '解决方案' },
-        { key:'fdfdfdfd', name: '云市场' },
-        { key:'fdfdfd', name: '公司动态' },
-        { key:'fdfdf', name: '招贤纳士' },
-        { key:'fdfd', name: '关于我们' }
+        { key:'404', name: '解决方案' },
+        { key:'404', name: '云市场' },
+        { key:'404', name: '公司动态' },
+        { key:'404', name: '招贤纳士' },
+        { key:'404', name: '关于我们' }
       ]
     }
   },
