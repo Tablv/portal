@@ -155,6 +155,7 @@ export default {
     right: 0;
     height: 0px;
     overflow: hidden;
+    // animation: noHeight 1s forwards normal;
   }
 }
 </style>
