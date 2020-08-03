@@ -13,23 +13,20 @@ export const constantRoutes = [
     children: [{
       path: 'index',
       name: 'index',
-      component: () => import('@/views/index.vue'),
-      meta: { title: '首页' }
+      component: () => import('@/views/index.vue')
     }, {
       path: 'product',
       name: 'product',
-      component: () => import('@/views/product.vue'),
-      meta: { title: '产品服务' }
+      component: () => import('@/views/product.vue')
     }]
   },
   {
     path: '/404',
     name: '404',
-    component: () => import('@/views/404.vue'),
-    hidden: true
+    component: () => import('@/views/404.vue')
   },
   {
-    path: '/*',
+    path: '*',
     name: '*',
     redirect: '/404'
   }
@@ -37,6 +34,7 @@ export const constantRoutes = [
 
 const createRouter = () => new Router({
   mode: 'history',
+  // mode: 'hash',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

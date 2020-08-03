@@ -10,10 +10,10 @@
 
     <section class="title-content">
       <h1>
-        安全、稳定、可信赖来BI软件
+        安全、稳定、可信赖的 BI 软件
       </h1>
       <p>
-        新一代自助式数据分析的BI软件， 为客户提供安全可靠的全流程服务
+        新一代自助式数据分析的 BI 软件， 为客户提供安全可靠的全流程服务
       </p>
     </section>
 
@@ -21,15 +21,19 @@
     <div class="box-card-group">
       <el-card
         v-for="(item, index) in cardlist" 
-        class="box-card"
+        :class="{
+          'box-card-hover': clickFlag && activeIndex === index,
+          'box-card': true
+        }"
         :key="item.icon + 'fdfdfd'"
+        @click.native="onclick(index)"
         @mouseenter.native="onmouseover(index)"
         @mouseleave.native="onmouseleavr($event)"
       >
         <div style="margin-top: 50px;">
-            <i :class="item.icon" style="font-size: 80px; color: #253959"></i>
+            <i :class="item.icon" class="box-card-font-icon"></i>
         </div>
-        <div style="color: #043469">
+        <div class="box-card-font">
           <h4>{{item.name}}</h4>
         </div>
       </el-card>
@@ -62,25 +66,34 @@ export default {
         { src: "./banner2.png", key: "img2" },
       ],
       cardlist: [
-        { icon: "el-icon-s-data", name: "BI分析", messge: "完美的数据分析工具"},
+        { icon: "el-icon-s-data", name: "BI 分析", messge: "完美的数据分析工具"},
         { icon: "el-icon-s-order", name: "工单管理", messge: "全流程管理您的工单" },
         { icon: "el-icon-s-check", name: "签章处理", messge: "全流程管理您的签章"},
         { icon: "el-icon-camera-solid", name: "生产监控", messge: "实现全流程安全生产"}
       ],
-      activeIndex: 0
+      activeIndex: 0,
+      clickFlag: false
     }
   },
   methods: {
     onmouseover(index) {
-     this.$refs.showDetails.classList.remove('test-show')
-     this.$refs.showDetails.classList.add('hover-test-show')
-     this.$refs.indexPage.classList.add('box-card-no-margin')
-     this.activeIndex = index;
+      this.handleDown(index, false);
     },
     onmouseleavr() {
+      if (this.clickFlag) return;
       this.$refs.showDetails.classList.remove('hover-test-show')
       this.$refs.showDetails.classList.add('test-show')
       this.$refs.indexPage.classList.remove('box-card-no-margin')
+    },
+    onclick(index) {
+      this.handleDown(index, true);
+    },
+    handleDown(index, flag) {
+      this.clickFlag = flag;
+      this.$refs.showDetails.classList.remove('test-show')
+      this.$refs.showDetails.classList.add('hover-test-show')
+      this.$refs.indexPage.classList.add('box-card-no-margin')
+      this.activeIndex = index;
     }
   }
 }
@@ -97,6 +110,12 @@ export default {
 .box-card-no-margin {
   animation: nomyMagin 1s forwards normal;
 }
+.colorGroup() {
+   background-image: -webkit-linear-gradient(bottom, #515cb9, #07144e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .index-page {
   overflow: hidden;
   margin-bottom: 270px;
@@ -109,11 +128,14 @@ export default {
   }
 
   .box-card-group {
-    padding: 50px 200px;
+    padding: 0 200px;
     padding-bottom: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    .box-card-hover {
+      transform: scale(1.1);
+    }
     .box-card {
       flex: 1 0;
       margin: 10px;
@@ -124,9 +146,16 @@ export default {
       float: left;
       display: block;
       transition: 0.1s;
+      cursor: pointer;
       &:hover {
         transform: scale(1.1);
-        
+      }
+      &-font {
+        .colorGroup();
+      }
+      &-font-icon {
+        font-size: 80px;
+        .colorGroup();
       }
     }
   }
@@ -155,7 +184,6 @@ export default {
     right: 0;
     height: 0px;
     overflow: hidden;
-    // animation: noHeight 1s forwards normal;
   }
 }
 </style>
