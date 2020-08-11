@@ -2,8 +2,8 @@
   <div class="index-page" ref="indexPage">
     <!-- 轮播图 -->
     <el-carousel indicator-position="outside" class="carousel" height="450px">
-      <el-carousel-item v-for="item in imgList" :key="item.key">
-        <img v-bind:src="item.src">
+      <el-carousel-item v-for="item in imgList" :key="item.code">
+        <img v-bind:src="item.url">
       </el-carousel-item>
     </el-carousel>
     
@@ -25,13 +25,13 @@
           'box-card-hover': clickFlag && activeIndex === index,
           'box-card': true
         }"
-        :key="item.icon + 'fdfdfd'"
+        :key="item.id"
         @click.native="onclick(index)"
         @mouseenter.native="onmouseover(index)"
         @mouseleave.native="onmouseleavr($event)"
       >
         <div style="margin-top: 50px;">
-            <i :class="item.icon" class="box-card-font-icon"></i>
+            <i :class="item.iconClass" class="box-card-font-icon"></i>
         </div>
         <div class="box-card-font">
           <h4>{{item.name}}</h4>
@@ -40,42 +40,60 @@
     </div>
     <!-- 详情 -->
     <section ref="showDetails" class="test-show">
-      <div>
+      <div class="details-title" @click="handleClick">
         <h3>{{ cardlist[activeIndex].name }}</h3>
-        <p>{{ cardlist[activeIndex].messge }}</p>
+        <p>{{ cardlist[activeIndex].content }}</p>
       </div>
-      <div style="background: #e2e6f2">
+      <!-- <div style="background: #e2e6f2">
         <h3>第一个标题</h3>
         <p>介绍巴拉巴拉巴拉巴</p>
       </div>
       <div style="background: #e2e6f2">
         <h3>第一个标题</h3>
         <p>介绍巴拉巴拉巴拉巴</p>
-      </div>
+      </div> -->
     </section>
   </div>
 </template>
 
 <script>
+import { loadImg, loadCardList } from '@/API/indexPage.js'
+
 export default {
   name: 'index',
   data() {
     return {
-      imgList: [
-        { src: "./banner.png", key: "img1" },
-        { src: "./banner2.png", key: "img2" },
-      ],
+      imgList: [],
       cardlist: [
-        { icon: "el-icon-s-data", name: "BI 分析", messge: "完美的数据分析工具"},
-        { icon: "el-icon-s-order", name: "工单管理", messge: "全流程管理您的工单" },
-        { icon: "el-icon-s-check", name: "签章处理", messge: "全流程管理您的签章"},
-        { icon: "el-icon-camera-solid", name: "生产监控", messge: "实现全流程安全生产"}
+        { iconClass: "el-icon-s-data", name: "BI 分析", content: "完美的数据分析工具"},
+        { iconClass: "el-icon-s-order", name: "工单管理", content: "全流程管理您的工单" },
+        { iconClass: "el-icon-s-check", name: "签章处理", content: "全流程管理您的签章"},
+        { iconClass: "el-icon-camera-solid", name: "生产监控", content: "实现全流程安全生产"}
       ],
       activeIndex: 0,
       clickFlag: false
     }
   },
+  mounted() {
+    loadImg().then(data => {
+      if (data.success) {
+        this.imgList = data.result
+      } else {
+        this.imgList = [
+          { src: "./banner.png", key: "img1" },
+          { src: "./banner2.png", key: "img2" },
+        ]
+      }
+    });
+    loadCardList().then(data => {
+      if (data.success) {
+        this.cardlist = data.result;
+      }
+    })
+  },
   methods: {
+    handleClick() {
+    },
     onmouseover(index) {
       this.handleDown(index, false);
     },
@@ -101,10 +119,10 @@ export default {
 <style lang="less">
 @keyframes nomyMagin {
   from {
-    margin-bottom: 300px;
+    margin-bottom: 270px;
   }
   to {
-    margin-bottom: -50px;
+    margin-bottom: 0px;
   }
 }
 .box-card-no-margin {
@@ -160,30 +178,36 @@ export default {
     }
   }
 
-  .hover-test-show {
+  .detail-show {
+    display: grid;
+    transition: 1s;
     padding: 0 200px;
     margin-top: 20px;
-    padding-top: 20px;
-    height: 270px;
-    display: grid;
     background: #f6f7fc;
     box-shadow: inset 0px 0px 15px #dddfe6;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto auto;
+  }
+
+  .hover-test-show {
+    height: 270px;
+    padding-top: 20px;
     overflow: visible;
-    transition: 1s;
+    .detail-show;
+    .details-title {
+      width: 300px;
+      cursor: pointer;
+    }
   }
 
   .test-show {
-    float: left;
-    padding: 0 200px;
-    margin-top: 20px;
-    z-index: 9999px;
-    position: absolute;
-    left: 0;
-    right: 0;
     height: 0px;
     overflow: hidden;
+    .detail-show;
+    .details-title {
+      width: 300px;
+      cursor: pointer;
+    }
   }
 }
 </style>

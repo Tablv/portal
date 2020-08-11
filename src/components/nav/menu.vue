@@ -4,16 +4,21 @@
       class="menu-bar-item"
       @click="doClick(item)"
       v-for="item in menuList"
-      :key="item.key"
-      :active="item.key === activeKey"
+      :key="item.code"
+      :active="item.url === activeKey"
     >
       {{item.name}}
       <template>
-        <div class="sub-menu" v-show="item.submenu">
+        <div class="sub-menu" v-show="item.children">
           <ul class="sub-menu-ul">
-            <li class="sub-menu-ul-li">仪表盘</li>
-            <li class="sub-menu-ul-li">故事板</li>
-            <li class="sub-menu-ul-li">hello</li>
+            <li
+              class="sub-menu-ul-li"
+              @click="doClick(item)"
+              v-for="childItem in item.children"
+              :key="childItem.code"
+            >
+                {{childItem.name}}
+            </li>
           </ul>
         </div>
       </template>
@@ -22,21 +27,33 @@
 </template>
 
 <script>
+import { loadMenu } from '@/API/indexPage.js'
 
 export default {
   name: 'menuBar',
   data() {
     return {
-      menuList: [
-        { key:'index', name: '首页', submenu: false },
-        { key:'product', name: '产品服务', submenu: true },
-        { key:'4041', name: '解决方案', submenu: true },
-        { key:'4042', name: '云市场', submenu: true },
-        { key:'4043', name: '公司动态', submenu: true },
-        { key:'4045', name: '招贤纳士', submenu: false },
-        { key:'4046', name: '关于我们', submenu: false }
-      ]
+      menuList: []
     }
+  },
+  mounted() {
+    if (this.menuList.length) return;
+    loadMenu().then(data => {
+      if (data.success) {
+        this.menuList = data.result;
+      } else {
+        this.menuList = [
+          { code:'index', url:'index', name: '首页', submenu: false },
+          { code:'product', url:'index', name: '产品服务', submenu: true },
+          { code:'4041', url:'index', name: '解决方案', submenu: true },
+          { code:'4042', url:'index', name: '云市场', submenu: true },
+          { code:'4043', url:'index', name: '公司动态', submenu: true },
+          { code:'4045', url:'index', name: '招贤纳士', submenu: false },
+          { code:'4046', url:'index', name: '关于我们', submenu: false }
+        ]
+      
+      }
+    })
   },
   computed: {
     activeKey() {
@@ -45,7 +62,7 @@ export default {
   },
   methods: {
     doClick(route) {
-      this.$router.push({path: route.key })
+      this.$router.push({path: route.url })
     }
   }
 }

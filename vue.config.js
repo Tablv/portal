@@ -10,18 +10,17 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-  // devServer: {
-  //   port,
-  //   proxy: {
-  //     '/': {
-  //       target: 'http://192.168.1.202:8080/admin',
-  //       changeOrigin: true,
-  //       pathRewrite: {
-  //         '^/admin': ''
-  //       }
-  //     }
-  //   }
-  // },
+  devServer: {
+    proxy: {
+      '/': {
+        target: 'http://192.168.137.152:9000/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': ''
+        }
+      }
+    }
+  },
   configureWebpack: {
     resolve: {
       alias: {

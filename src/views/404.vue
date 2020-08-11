@@ -1,6 +1,6 @@
 <template>
   <div class="warn-content">
-    <p>404~<span class="warn-font">警告</span></p>
+    <img class="warn-img" src="/404_images/404.png" alt="404">
   </div>
 </template>
 
@@ -13,9 +13,9 @@ export default {
 <style lang="less" scoped>
 .warn-content {
   font-size: 100px;
-  .warn-font {
-    font-size: 10px;
-    color: #919190;
+  .warn-img {
+    width: 30%;
+    margin-top: 300px;
   }
 }
 </style>
