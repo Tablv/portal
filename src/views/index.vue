@@ -1,9 +1,9 @@
 <template>
   <div class="index-page" ref="indexPage">
     <!-- 轮播图 -->
-    <el-carousel indicator-position="outside" class="carousel" height="450px">
+    <el-carousel  height="425px" class="carousel">
       <el-carousel-item v-for="item in imgList" :key="item.code">
-        <img v-bind:src="item.url">
+        <img v-bind:src="item.url" width="100%" height="425px">
       </el-carousel-item>
     </el-carousel>
     
@@ -22,13 +22,12 @@
       <el-card
         v-for="(item, index) in cardlist" 
         :class="{
-          'box-card-hover': clickFlag && activeIndex === index,
+          'box-card-hover': isHover && activeIndex === index,
           'box-card': true
         }"
         :key="item.id"
-        @click.native="onclick(index)"
-        @mouseenter.native="onmouseover(index)"
-        @mouseleave.native="onmouseleavr($event)"
+        @mouseenter.native="onmouseEnter(index)"
+        @mouseleave.native="onmouseleave($event)"
       >
         <div style="margin-top: 50px;">
             <i :class="item.iconClass" class="box-card-font-icon"></i>
@@ -39,19 +38,33 @@
       </el-card>
     </div>
     <!-- 详情 -->
-    <section ref="showDetails" class="test-show">
-      <div class="details-title" @click="handleClick">
-        <h3>{{ cardlist[activeIndex].name }}</h3>
-        <p>{{ cardlist[activeIndex].content }}</p>
-      </div>
-      <!-- <div style="background: #e2e6f2">
-        <h3>第一个标题</h3>
-        <p>介绍巴拉巴拉巴拉巴</p>
-      </div>
-      <div style="background: #e2e6f2">
-        <h3>第一个标题</h3>
-        <p>介绍巴拉巴拉巴拉巴</p>
-      </div> -->
+    <section
+      ref="showDetails"
+      class="test-show"
+      v-if="cardlist[activeIndex]"
+      @mouseenter="onmouseEnter(activeIndex)"
+      @mouseleave="onmouseleave(activeIndex)"
+    >
+      <section class="details-title">
+        <span class="details-title-text">{{cardlist[activeIndex].name}}</span>
+        <br/>
+        <el-button class="details-title-button" @click="handleClick" type="text">
+          more
+          <i class="el-icon-arrow-right el-icon--right"></i>
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </section>
+
+      <!-- 详情 -->
+      <section class="details-item-group">
+        <div class="details-item"
+          v-for="details in cardlist[activeIndex].contentList"
+          :key="details.title"
+        >
+          <span class="details-item-title" v-html="details.title"></span>
+          <p class="details-item-content" v-html="details.content"></p>
+        </div>
+      </section>
     </section>
   </div>
 </template>
@@ -64,25 +77,16 @@ export default {
   data() {
     return {
       imgList: [],
-      cardlist: [
-        { iconClass: "el-icon-s-data", name: "BI 分析", content: "完美的数据分析工具"},
-        { iconClass: "el-icon-s-order", name: "工单管理", content: "全流程管理您的工单" },
-        { iconClass: "el-icon-s-check", name: "签章处理", content: "全流程管理您的签章"},
-        { iconClass: "el-icon-camera-solid", name: "生产监控", content: "实现全流程安全生产"}
-      ],
+      cardlist: [],
+      isHover: false,
       activeIndex: 0,
-      clickFlag: false
+      leaveTimer: 0
     }
   },
   mounted() {
     loadImg().then(data => {
       if (data.success) {
         this.imgList = data.result
-      } else {
-        this.imgList = [
-          { src: "./banner.png", key: "img1" },
-          { src: "./banner2.png", key: "img2" },
-        ]
       }
     });
     loadCardList().then(data => {
@@ -93,25 +97,33 @@ export default {
   },
   methods: {
     handleClick() {
+      const { url, code } = this.cardlist[this.activeIndex];
+      window.open(url, code);
     },
-    onmouseover(index) {
-      this.handleDown(index, false);
-    },
-    onmouseleavr() {
-      if (this.clickFlag) return;
-      this.$refs.showDetails.classList.remove('hover-test-show')
-      this.$refs.showDetails.classList.add('test-show')
-      this.$refs.indexPage.classList.remove('box-card-no-margin')
-    },
-    onclick(index) {
-      this.handleDown(index, true);
-    },
-    handleDown(index, flag) {
-      this.clickFlag = flag;
-      this.$refs.showDetails.classList.remove('test-show')
-      this.$refs.showDetails.classList.add('hover-test-show')
-      this.$refs.indexPage.classList.add('box-card-no-margin')
+  
+    /**
+     * 鼠标进入
+     */
+    onmouseEnter(index) {
+      clearTimeout(this.leaveTimer);
+      this.isHover = true;
+      this.$refs.showDetails.classList.remove('test-show');
+      this.$refs.showDetails.classList.add('hover-test-show');
+      this.$refs.indexPage.classList.add('box-card-no-margin');
       this.activeIndex = index;
+    },
+
+    /**
+     * 鼠标离开
+     */
+    onmouseleave() {
+      clearTimeout(this.leaveTimer);
+      this.leaveTimer = setTimeout(() => {
+        this.isHover = false;
+        this.$refs.showDetails.classList.remove('hover-test-show');
+        this.$refs.showDetails.classList.add('test-show');
+        this.$refs.indexPage.classList.remove('box-card-no-margin');
+      }, 200);
     }
   }
 }
@@ -119,7 +131,7 @@ export default {
 <style lang="less">
 @keyframes nomyMagin {
   from {
-    margin-bottom: 270px;
+    margin-bottom: 320px;
   }
   to {
     margin-bottom: 0px;
@@ -129,14 +141,16 @@ export default {
   animation: nomyMagin 1s forwards normal;
 }
 .colorGroup() {
-   background-image: -webkit-linear-gradient(bottom, #515cb9, #07144e);
+  background-image: -webkit-linear-gradient(bottom, #515cb9, #07144e);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .index-page {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  margin-bottom: 270px;
+  margin-bottom: 60px;
 
   .carousel {
     background: url("../assets/bg.png");
@@ -146,7 +160,7 @@ export default {
   }
 
   .box-card-group {
-    padding: 0 200px;
+    padding: 0 18%;
     padding-bottom: 0;
     display: flex;
     flex-wrap: wrap;
@@ -155,16 +169,17 @@ export default {
       transform: scale(1.1);
     }
     .box-card {
-      flex: 1 0;
-      margin: 10px;
-      margin-bottom: 16px;
-      max-width: 250px;
-      min-width: 200px;
-      height: 300px;
+      flex: 1;
       float: left;
       display: block;
+      max-width: 220px;
+      height: 300px;
       transition: 0.1s;
+      flex-wrap: nowrap;
+      margin: 16px;
+      border-radius: 16px;
       cursor: pointer;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
       &:hover {
         transform: scale(1.1);
       }
@@ -178,36 +193,84 @@ export default {
     }
   }
 
-  .detail-show {
+  .common-show {
     display: grid;
     transition: 1s;
-    padding: 0 200px;
+    padding: 0px 18%;
     margin-top: 20px;
+    row-gap: 20px;
+    column-gap: 10px;
+    justify-items: left;
     background: #f6f7fc;
     box-shadow: inset 0px 0px 15px #dddfe6;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
+    grid-template-columns: 400px auto;
+    grid-template-rows: auto;
+    .details-title {
+      width: 300px;
+      &-text {
+        margin: 5px 0;
+        font-weight: bold;
+        display: inline-block;
+        cursor: default;
+      }
+      &-button {
+        padding: 3px;
+        padding-left: 5px;
+        margin: 10px;
+        border-radius: 5px;
+        color:rgb(109, 123, 134);
+        background: #fff;
+        box-shadow: inset 0px 0px 4px 0px #f5f5f5, 0px 0px 4px 0px #e4e2e2;
+        &:hover {
+          background:#c6d0d8;
+          color: #fff;
+        }
+        .el-icon--right {
+          margin-left: -5px;
+          font-size: 12px;
+        }
+      }
+    }
+    .details-item-group {
+      width: 100%;
+      background: #d4d4d4;
+      .details-item {
+        padding: 10px 30px;
+        overflow: hidden;
+        text-align: left;
+        line-height: 20px;
+        font-size: 14px;
+        border-radius: 2px;
+        &-title {
+          margin: 5px 0;
+          font-weight: bold;
+          display: inline-block;
+          cursor: default;
+        }
+        &-content {
+          margin: 2px 0;
+          line-height: 20px;
+          cursor: default;
+        }
+        &:hover {
+          background: #e2e6f2;
+        }
+      }
+    }
   }
 
   .hover-test-show {
-    height: 270px;
-    padding-top: 20px;
+    height: 222px;
+    padding: 30px 18% !important;
     overflow: visible;
-    .detail-show;
-    .details-title {
-      width: 300px;
-      cursor: pointer;
-    }
+    .common-show;
   }
-
+  
   .test-show {
     height: 0px;
+    padding: 0px 18% !important;
     overflow: hidden;
-    .detail-show;
-    .details-title {
-      width: 300px;
-      cursor: pointer;
-    }
+    .common-show;
   }
 }
 </style>

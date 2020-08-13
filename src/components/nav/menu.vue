@@ -73,25 +73,19 @@ export default {
     display: block;
   }
   .sub-menu {
-    background: #07144e;
     display: none;
-    // border-radius: 0 0 5px 5px;
-    border-radius: 5px;
+    background: rgb(240, 240, 240);
     box-shadow: 8px 8px 14px -18px #3492ff;
     .sub-menu-ul {
       list-style: none;
-      padding: 0;
-      margin: 0;
-      color: #fff;
+      padding: 10px 0;
+      color: #000;
       &-li {
-        font-size: 12px;
-        transform: scale(1);
-        margin: 0;
+        font-size: 14px;
         line-height: 40px;
         &:hover {
-          transform: scale(1.1);
-          color: #7db4f1;
-          transition: 0.2s;
+          background: #166df7;
+          color: #fff;
         }
       }
     }

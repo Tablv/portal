@@ -11,12 +11,20 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
+    port: 8082,
     proxy: {
-      '/': {
-        target: 'http://192.168.137.152:9000/',
+      '/homepageApi': {
+        target: 'http://192.168.101.235:9000/homepageApi',
         changeOrigin: true,
         pathRewrite: {
-          '^/': ''
+          '^/homepageApi': ''
+        }
+      },
+      '/manager': {
+        target: 'http://192.168.101.235:9000/admin/login',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/manager': ''
         }
       }
     }

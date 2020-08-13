@@ -1,6 +1,6 @@
 <template>
   <div class="logo-bar">
-    <img src="/favicon.ico" class="logo-img" alt="logo">
+    <div class="logo-img"></div>
   </div>
 </template>
 
@@ -17,8 +17,10 @@ export default {
   align-items: center;
   justify-items: center;
   .logo-img {
-    
-    width: 80%;
+    background: url(/favicon.ico) 47% -52% no-repeat;
+    width: 100%;
+    height: 60%;
+    cursor: pointer;
   }
 }
 </style>
