@@ -9,7 +9,7 @@
     >
       {{item.name}}
       <template>
-        <div class="sub-menu" v-show="item.children">
+        <div class="sub-menu" v-if="item.children">
           <ul class="sub-menu-ul">
             <li
               class="sub-menu-ul-li"
@@ -41,17 +41,6 @@ export default {
     loadMenu().then(data => {
       if (data.success) {
         this.menuList = data.result;
-      } else {
-        this.menuList = [
-          { code:'index', url:'index', name: '首页', submenu: false },
-          { code:'product', url:'index', name: '产品服务', submenu: true },
-          { code:'4041', url:'index', name: '解决方案', submenu: true },
-          { code:'4042', url:'index', name: '云市场', submenu: true },
-          { code:'4043', url:'index', name: '公司动态', submenu: true },
-          { code:'4045', url:'index', name: '招贤纳士', submenu: false },
-          { code:'4046', url:'index', name: '关于我们', submenu: false }
-        ]
-      
       }
     })
   },
@@ -74,6 +63,7 @@ export default {
   }
   .sub-menu {
     display: none;
+    text-align: left;
     background: rgb(240, 240, 240);
     box-shadow: 8px 8px 14px -18px #3492ff;
     .sub-menu-ul {
@@ -82,6 +72,7 @@ export default {
       color: #000;
       &-li {
         font-size: 14px;
+        padding-left: 20px;
         line-height: 40px;
         &:hover {
           background: #166df7;

@@ -6,6 +6,8 @@ import router from './router';
 
 import '@/styles/base.less'
 
+import './mock/index'
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;

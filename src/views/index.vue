@@ -142,7 +142,6 @@ export default {
 }
 .colorGroup() {
   background-image: -webkit-linear-gradient(bottom, #515cb9, #07144e);
-  -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -189,6 +188,7 @@ export default {
       &-font-icon {
         font-size: 80px;
         .colorGroup();
+        background-image: -webkit-linear-gradient(bottom, #515cb9, #f500297a);
       }
     }
   }
@@ -233,7 +233,8 @@ export default {
     }
     .details-item-group {
       width: 100%;
-      background: #d4d4d4;
+      background: #d2d2d273;
+      overflow: auto;
       .details-item {
         padding: 10px 30px;
         overflow: hidden;
@@ -253,7 +254,7 @@ export default {
           cursor: default;
         }
         &:hover {
-          background: #e2e6f2;
+          background: #c4fcff3d
         }
       }
     }
