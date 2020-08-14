@@ -5,9 +5,8 @@
       @click="doClick(item)"
       v-for="item in menuList"
       :key="item.code"
-      :active="item.url === activeKey"
     >
-      {{item.name}}
+      <router-link :to="item.url" >{{item.name}}</router-link>
       <template>
         <div class="sub-menu" v-if="item.children">
           <ul class="sub-menu-ul">
@@ -17,7 +16,7 @@
               v-for="childItem in item.children"
               :key="childItem.code"
             >
-                {{childItem.name}}
+              <router-link :to="childItem.url" >{{childItem.name}}</router-link>
             </li>
           </ul>
         </div>
@@ -51,7 +50,12 @@ export default {
   },
   methods: {
     doClick(route) {
-      this.$router.push({path: route.url })
+      // 临时解决方法
+      if (route.code === 'HOMEPAGE') {
+        this.$router.push({path: '/index' })
+      } else {
+        this.$router.push({path: route.url })
+      }
     }
   }
 }
@@ -63,20 +67,20 @@ export default {
   }
   .sub-menu {
     display: none;
-    text-align: left;
+    text-align: center;
     background: rgb(240, 240, 240);
     box-shadow: 8px 8px 14px -18px #3492ff;
     .sub-menu-ul {
       list-style: none;
       padding: 10px 0;
-      color: #000;
+      a {
+        color: #000 !important;
+      }
       &-li {
         font-size: 14px;
-        padding-left: 20px;
         line-height: 40px;
         &:hover {
           background: #166df7;
-          color: #fff;
         }
       }
     }

@@ -11,14 +11,15 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/index',
     children: [{
-      path: 'index',
+      path: '/index',
       name: 'index',
       component: () => import('@/views/index.vue')
-    }, {
-      path: 'product',
-      name: 'product',
-      component: () => import('@/views/product.vue')
     }]
+  },
+  {
+    path: '/product',
+    name: '产品服务',
+    component: () => import('@/views/product.vue')
   },
   {
     path: '/404',
@@ -34,9 +35,9 @@ export const constantRoutes = [
 
 const createRouter = () => new Router({
   mode: 'history',
-  // mode: 'hash',
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: constantRoutes,
+  linkExactActiveClass: 'menu-bar-item-active',
+  scrollBehavior: () => ({ y: 0 })
 })
 
 const router = createRouter()

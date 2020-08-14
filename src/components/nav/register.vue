@@ -11,7 +11,7 @@ export default {
   name: 'registerBar',
   methods: {
     handclick() {
-      window.open("/manager")
+      window.open("/manager");
     }
   }
 }

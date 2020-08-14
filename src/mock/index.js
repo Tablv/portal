@@ -1,14 +1,14 @@
 import Mock from 'mockjs'
 import Data from './indexData'
 
-Mock.mock('/homepageApi/getHomepageMenu', 'get', () => {
+Mock.mock('/admin/homepageApi/getHomepageMenu', 'get', () => {
   return {
     success: true,
     result: Data.menuList
   }
 })
 
-Mock.mock('/homepageApi/getBannerList', 'get', () => {
+Mock.mock('/admin/homepageApi/getBannerList', 'get', () => {
   return {
     success: true,
     result: [
@@ -17,7 +17,7 @@ Mock.mock('/homepageApi/getBannerList', 'get', () => {
     ]
   }
 })
-Mock.mock('/homepageApi/getSysConfigList', 'get', () => {
+Mock.mock('/admin/homepageApi/getSysConfigList', 'get', () => {
   return {
     success: true,
     result: [
@@ -38,6 +38,14 @@ Mock.mock('/homepageApi/getSysConfigList', 'get', () => {
         ]
       },
       { iconClass: "el-icon-camera-solid", name: "生产监控", contentList: [
+          { title: "生产监控", content: "实现全流程安全生产" }
+        ]
+      },
+      { iconClass: "el-icon-camera-solid", name: "生产监d控", contentList: [
+          { title: "生产监控", content: "实现全流程安全生产" }
+        ]
+      },
+      { iconClass: "el-icon-camera-solid", name: "生产监dd控", contentList: [
           { title: "生产监控", content: "实现全流程安全生产" }
         ]
       }

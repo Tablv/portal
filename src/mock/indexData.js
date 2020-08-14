@@ -1,5 +1,5 @@
 const menuList = [
-  { code:'index', url:'index', name: '首页', children: null },
+  { code:'HOMEPAGE', url:'index', name: '首页', children: null },
   { code:'product', url:'1', name: '产品服务', children: [
     { code:'41041', url:'1', name: '11解决方案', children: null },
     { code:'41042', url:'1', name: '11云市场', children: null },
