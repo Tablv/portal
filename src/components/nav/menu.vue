@@ -6,7 +6,7 @@
       v-for="item in menuList"
       :key="item.code"
     >
-      <router-link :to="item.url" >{{item.name}}</router-link>
+      <router-link :to="item.url" tag="span" >{{item.name}}</router-link>
       <template>
         <div class="sub-menu" v-if="item.children">
           <ul class="sub-menu-ul">
@@ -16,7 +16,7 @@
               v-for="childItem in item.children"
               :key="childItem.code"
             >
-              <router-link :to="childItem.url" >{{childItem.name}}</router-link>
+              <router-link :to="childItem.url" tag="span">{{childItem.name}}</router-link>
             </li>
           </ul>
         </div>
@@ -73,13 +73,12 @@ export default {
     .sub-menu-ul {
       list-style: none;
       padding: 10px 0;
-      a {
-        color: #000 !important;
-      }
+      color: #000;
       &-li {
         font-size: 14px;
         line-height: 40px;
         &:hover {
+          color: #ffffff;
           background: #166df7;
         }
       }
