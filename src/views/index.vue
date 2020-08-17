@@ -174,7 +174,6 @@ export default {
       max-width: 220px;
       height: 300px;
       transition: 0.1s;
-      flex-wrap: nowrap;
       margin: 16px;
       border-radius: 16px;
       cursor: pointer;

@@ -6,6 +6,8 @@ import router from './router';
 
 import '@/styles/base.less'
 
+import '@/assets/font/iconfont.css';
+
 // import './mock/index'
 
 Vue.use(ElementUI);
