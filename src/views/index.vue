@@ -56,14 +56,14 @@
       </section>
 
       <!-- 详情 -->
-      <section class="details-item-group">
-        <div class="details-item"
+      <section class="details-item-group" v-html="cardlist[activeIndex].content">
+        <!-- <div class="details-item"
           v-for="details in cardlist[activeIndex].contentList"
           :key="details.title"
         >
           <span class="details-item-title" v-html="details.title"></span>
           <p class="details-item-content" v-html="details.content"></p>
-        </div>
+        </div> -->
       </section>
     </section>
   </div>

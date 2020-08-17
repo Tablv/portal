@@ -6,7 +6,7 @@ import router from './router';
 
 import '@/styles/base.less'
 
-import './mock/index'
+// import './mock/index'
 
 Vue.use(ElementUI);
 
