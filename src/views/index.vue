@@ -16,56 +16,49 @@
         新一代自助式数据分析的 BI 软件， 为客户提供安全可靠的全流程服务
       </p>
     </section>
-
+    
     <!-- 卡片 -->
-    <div class="box-card-group">
-      <el-card
-        v-for="(item, index) in cardlist" 
-        :class="{
-          'box-card-hover': isHover && activeIndex === index,
-          'box-card': true
-        }"
-        :key="item.id"
-        @mouseenter.native="onmouseEnter(index)"
-        @mouseleave.native="onmouseleave($event)"
-      >
-        <div style="margin-top: 50px;">
-            <i :class="item.iconClass" class="box-card-font-icon"></i>
-        </div>
-        <div class="box-card-font">
-          <h4>{{item.name}}</h4>
-        </div>
-      </el-card>
-    </div>
-    <!-- 详情 -->
-    <section
-      ref="showDetails"
-      class="test-show"
-      v-if="cardlist[activeIndex]"
-      @mouseenter="onmouseEnter(activeIndex)"
-      @mouseleave="onmouseleave(activeIndex)"
-    >
-      <section class="details-title">
-        <span class="details-title-text">{{cardlist[activeIndex].name}}</span>
-        <br/>
-        <el-button class="details-title-button" @click="handleClick" type="text">
-          more
-          <i class="el-icon-arrow-right el-icon--right"></i>
-          <i class="el-icon-arrow-right el-icon--right"></i>
-        </el-button>
-      </section>
-
-      <!-- 详情 -->
-      <section class="details-item-group" v-html="cardlist[activeIndex].content">
-        <!-- <div class="details-item"
-          v-for="details in cardlist[activeIndex].contentList"
-          :key="details.title"
+    <div v-for="(itemList, listIndex) in cardlist" :key="listIndex">
+      <div class="box-card-group">
+        <el-card
+          v-for="(item, index) in itemList"
+          :class="{
+            'box-card-hover': isHover && activeIndex === index && listIndex === activeListIndex,
+            'box-card': true
+          }"
+          :key="item.id"
+          @mouseenter.native="onmouseEnter(listIndex, index)"
+          @mouseleave.native="onmouseleave(listIndex)"
         >
-          <span class="details-item-title" v-html="details.title"></span>
-          <p class="details-item-content" v-html="details.content"></p>
-        </div> -->
+          <div style="margin-top: 50px;">
+              <i :class="item.iconClass" class="box-card-font-icon"></i>
+          </div>
+          <div class="box-card-font">
+            <h4>{{item.name}}</h4>
+          </div>
+        </el-card>
+      </div>
+      <!-- 卡片详情 -->
+      <section
+        ref="showDetails"
+        class="test-show"
+        @mouseenter="onmouseEnter(listIndex, activeIndex)"
+        @mouseleave="onmouseleave(listIndex)"
+      >
+        <section class="details-title">
+          <span class="details-title-text" v-html="detailsContext.name"></span>
+          <br/>
+          <el-button class="details-title-button" @click="handleClick" type="text">
+            进入演示系统
+            <i class="el-icon-arrow-right el-icon--right"></i>
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </section>
+        <!-- 详情 -->
+        <section class="details-item-group" v-html="detailsContext.content">
+        </section>
       </section>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -78,8 +71,13 @@ export default {
     return {
       imgList: [],
       cardlist: [],
+      // 卡片hover
       isHover: false,
+      // clo
+      activeListIndex: 0,
+      // row
       activeIndex: 0,
+      enterTimer: 0,
       leaveTimer: 0
     }
   },
@@ -91,37 +89,66 @@ export default {
     });
     loadCardList().then(data => {
       if (data.success) {
-        this.cardlist = data.result;
+        this.cardlist = this.division(data.result, 3)
       }
-    })
+    });
+  },
+  computed: {
+    detailsContext() {
+      return this.cardlist[this.activeListIndex][this.activeIndex];
+    }
   },
   methods: {
+    division(arr, length) {
+      let index = 0;
+      let newArray = []
+      while (index < arr.length) {
+        newArray.push(arr.splice(index, length))
+      }
+      return newArray;
+    },
+
     handleClick() {
-      const { url, code } = this.cardlist[this.activeIndex];
+      let { url, code } = this.detailsContext;
+      if (!url) return;
+      const urlType = /^\/|http|https/i;
+      const preflag = urlType.test(url);
+      url = preflag ? url : ("//" + url);
       window.open(url, code);
     },
   
     /**
      * 鼠标进入
      */
-    onmouseEnter(index) {
+    onmouseEnter(activeListIndex, index) {
       clearTimeout(this.leaveTimer);
-      this.isHover = true;
-      this.$refs.showDetails.classList.remove('test-show');
-      this.$refs.showDetails.classList.add('hover-test-show');
-      this.$refs.indexPage.classList.add('box-card-no-margin');
-      this.activeIndex = index;
+      clearTimeout(this.enterTimer);
+      this.enterTimer = setTimeout(() => {
+        this.activeIndex = index;
+        const beforeActiveListIndex = this.activeListIndex;
+        this.activeListIndex = activeListIndex;
+        // 上一个卡片
+        this.$refs.showDetails[beforeActiveListIndex].classList.remove('hover-test-show');
+        this.$refs.showDetails[beforeActiveListIndex].classList.add('test-show');
+        this.isHover = true;
+        // 当前卡片
+        this.$refs.showDetails[activeListIndex].classList.remove('test-show');
+        this.$refs.showDetails[activeListIndex].classList.add('hover-test-show');
+        // 页面
+        this.$refs.indexPage.classList.add('box-card-no-margin');
+      }, 200);
     },
 
     /**
      * 鼠标离开
      */
-    onmouseleave() {
+    onmouseleave(activeListIndex) {
       clearTimeout(this.leaveTimer);
+      clearTimeout(this.enterTimer);
       this.leaveTimer = setTimeout(() => {
         this.isHover = false;
-        this.$refs.showDetails.classList.remove('hover-test-show');
-        this.$refs.showDetails.classList.add('test-show');
+        this.$refs.showDetails[activeListIndex].classList.remove('hover-test-show');
+        this.$refs.showDetails[activeListIndex].classList.add('test-show');
         this.$refs.indexPage.classList.remove('box-card-no-margin');
       }, 200);
     }
@@ -155,6 +182,7 @@ export default {
     background: url("../assets/bg.png");
   }
   .title-content {
+    color: #07144e;
     margin: 100px;
   }
 
@@ -168,12 +196,11 @@ export default {
       transform: scale(1.1);
     }
     .box-card {
-      flex: 1;
       float: left;
       display: block;
-      max-width: 220px;
+      width: 220px;
       height: 300px;
-      transition: 0.1s;
+      transition: 1s;
       margin: 16px;
       border-radius: 16px;
       cursor: pointer;
@@ -195,6 +222,7 @@ export default {
   .common-show {
     display: grid;
     transition: 1s;
+    overflow: hidden;
     padding: 0px 18%;
     margin-top: 20px;
     row-gap: 20px;
@@ -208,21 +236,21 @@ export default {
       width: 300px;
       &-text {
         margin: 5px 0;
+        font-size: 20px;
         font-weight: bold;
         display: inline-block;
         cursor: default;
       }
       &-button {
-        padding: 3px;
-        padding-left: 5px;
-        margin: 10px;
+        margin: 30px;
+        min-width: 130px;
         border-radius: 5px;
-        color:rgb(109, 123, 134);
+        color: #07144e;
         background: #fff;
-        box-shadow: inset 0px 0px 4px 0px #f5f5f5, 0px 0px 4px 0px #e4e2e2;
+        font-weight: 600;
         &:hover {
-          background:#c6d0d8;
           color: #fff;
+          background: #07144e;
         }
         .el-icon--right {
           margin-left: -5px;
@@ -232,7 +260,6 @@ export default {
     }
     .details-item-group {
       width: 100%;
-      background: #d2d2d273;
       overflow: auto;
       .details-item {
         padding: 10px 30px;
@@ -262,14 +289,12 @@ export default {
   .hover-test-show {
     height: 222px;
     padding: 30px 18% !important;
-    overflow: visible;
     .common-show;
   }
   
   .test-show {
     height: 0px;
     padding: 0px 18% !important;
-    overflow: hidden;
     .common-show;
   }
 }
