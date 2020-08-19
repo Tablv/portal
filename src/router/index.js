@@ -14,6 +14,11 @@ export const constantRoutes = [
       path: '/index',
       name: 'index',
       component: () => import('@/views/index/index.vue')
+    },
+    {
+      path: '/productDetail',
+      name: 'productDetail',
+      component: () => import('@/views/productDetail/productDetail.vue')
     }]
   },
   {

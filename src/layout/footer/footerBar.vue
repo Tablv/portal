@@ -1,5 +1,5 @@
 <template>
-  <el-footer height="600px">
+  <el-footer height="560px">
     <section class="footer-content">
       <div class="footer-item-group" v-for="item in 4" :key="item">
         <span class="group-title">关于我们</span>

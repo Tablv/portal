@@ -26,6 +26,7 @@
       >
         <i :class="item.iconClass" class="box-card-font-icon"></i>
         <h4 class="box-card-font">{{item.name}}</h4>
+        <el-button class="box-card-button" @click="handleClick($event, item)">进入演示系统</el-button>
       </div>
     </section>
   </div>
@@ -55,8 +56,9 @@ export default {
     });
   },
   methods: {
-    handleClick() {
-      let { url, code } = this.detailsContext;
+    handleClick(event, item) {
+      let { url, code, content } = item;
+      this.$router.push({name: 'productDetail', params: { content }})
       if (!url) return;
       const urlType = /^\/|http|https/i;
       const preflag = urlType.test(url);
@@ -102,13 +104,64 @@ export default {
       align-items: center;
       margin-bottom: 30px;
       transition: 0.3s;
+      border-radius: 16px;
+      transform: scale(1);
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
-      cursor: pointer;
+     
       &:hover {
+        background-image: linear-gradient(0deg, #001432, #515cb9);
         transform: scale(1.1);
+        &::after {
+          content: "";
+          border-radius: 16px;
+          position: absolute;
+          display: block;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.3);
+        }
+        .box-card-button {
+          display: block;
+          background-image: linear-gradient(0deg, #ffffff);
+          &::after {
+            content: "";
+            top: 0px;
+            left: 0px;
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+          }
+            &:hover {
+            border: none;
+            color: #001432;
+            background: #fff;
+             cursor: pointer;
+            &::after {
+              background: rgba(240, 240, 240, 0.3);
+            }
+          }
+        }
+        .box-card-font {
+          background-image: linear-gradient(0deg, #fff);
+        }
+        .box-card-font-icon {
+          background-image: linear-gradient(0deg, #fff);
+        }
       }
       &-font {
         .colorGroup();
+      }
+      
+      &-button {
+        position: absolute;
+        display: none;
+        border-radius: 0;
+        z-index: 100;
+        bottom: 50px;
+        border: none;
+        font-weight: 900;
       }
       &-font-icon {
         .colorGroup();
