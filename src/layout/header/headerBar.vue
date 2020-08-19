@@ -1,7 +1,5 @@
 <template>
-<keep-alive>
   <nav-bar></nav-bar>
-</keep-alive>
 </template>
 
 <script>

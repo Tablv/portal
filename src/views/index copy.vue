@@ -18,10 +18,10 @@
     </section>
     
     <!-- 卡片 -->
-    <div v-for="(itemList, listIndex) in cardlist" :key="listIndex">
+    <!-- <div v-for="(itemList, listIndex) in cardlist" :key="listIndex"> -->
       <div class="box-card-group">
         <el-card
-          v-for="(item, index) in itemList"
+          v-for="(item, index) in cardlist"
           :class="{
             'box-card-hover': isHover && activeIndex === index && listIndex === activeListIndex,
             'box-card': true
@@ -39,7 +39,7 @@
         </el-card>
       </div>
       <!-- 卡片详情 -->
-      <section
+      <!-- <section
         ref="showDetails"
         class="test-show"
         @mouseenter="onmouseEnter(listIndex, activeIndex)"
@@ -53,12 +53,12 @@
             <i class="el-icon-arrow-right el-icon--right"></i>
             <i class="el-icon-arrow-right el-icon--right"></i>
           </el-button>
-        </section>
+        </section> -->
         <!-- 详情 -->
-        <section class="details-item-group" v-html="detailsContext.content">
+        <!-- <section class="details-item-group" v-html="detailsContext.content">
         </section>
-      </section>
-    </div>
+      </section> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -89,7 +89,8 @@ export default {
     });
     loadCardList().then(data => {
       if (data.success) {
-        this.cardlist = this.division(data.result, 3)
+        // this.cardlist = this.division(data.result, 3)
+        this.cardlist = data.result.splice(0, 4)
       }
     });
   },
@@ -121,52 +122,52 @@ export default {
      * 鼠标进入
      */
     onmouseEnter(activeListIndex, index) {
-      clearTimeout(this.leaveTimer);
-      clearTimeout(this.enterTimer);
-      this.enterTimer = setTimeout(() => {
-        this.activeIndex = index;
-        const beforeActiveListIndex = this.activeListIndex;
-        this.activeListIndex = activeListIndex;
-        // 上一个卡片
-        this.$refs.showDetails[beforeActiveListIndex].classList.remove('hover-test-show');
-        this.$refs.showDetails[beforeActiveListIndex].classList.add('test-show');
-        this.isHover = true;
-        // 当前卡片
-        this.$refs.showDetails[activeListIndex].classList.remove('test-show');
-        this.$refs.showDetails[activeListIndex].classList.add('hover-test-show');
-        // 页面
-        this.$refs.indexPage.classList.add('box-card-no-margin');
-      }, 200);
+      // clearTimeout(this.leaveTimer);
+      // clearTimeout(this.enterTimer);
+      // this.enterTimer = setTimeout(() => {
+      //   this.activeIndex = index;
+      //   const beforeActiveListIndex = this.activeListIndex;
+      //   this.activeListIndex = activeListIndex;
+      //   // 上一个卡片
+      //   this.$refs.showDetails[beforeActiveListIndex].classList.remove('hover-test-show');
+      //   this.$refs.showDetails[beforeActiveListIndex].classList.add('test-show');
+      //   this.isHover = true;
+      //   // 当前卡片
+      //   this.$refs.showDetails[activeListIndex].classList.remove('test-show');
+      //   this.$refs.showDetails[activeListIndex].classList.add('hover-test-show');
+      //   // 页面
+      //   // this.$refs.indexPage.classList.add('box-card-no-margin');
+      // }, 200);
     },
 
     /**
      * 鼠标离开
      */
     onmouseleave(activeListIndex) {
-      clearTimeout(this.leaveTimer);
-      clearTimeout(this.enterTimer);
-      this.leaveTimer = setTimeout(() => {
-        this.isHover = false;
-        this.$refs.showDetails[activeListIndex].classList.remove('hover-test-show');
-        this.$refs.showDetails[activeListIndex].classList.add('test-show');
-        this.$refs.indexPage.classList.remove('box-card-no-margin');
-      }, 200);
+      // clearTimeout(this.leaveTimer);
+      // clearTimeout(this.enterTimer);
+      // this.leaveTimer = setTimeout(() => {
+      //   this.isHover = false;
+      //   this.$refs.showDetails[activeListIndex].classList.remove('hover-test-show');
+      //   this.$refs.showDetails[activeListIndex].classList.add('test-show');
+      //   // this.$refs.indexPage.classList.remove('box-card-no-margin');
+      // }, 200);
     }
   }
 }
 </script>
 <style lang="less">
-@keyframes nomyMagin {
-  from {
-    margin-bottom: 320px;
-  }
-  to {
-    margin-bottom: 0px;
-  }
-}
-.box-card-no-margin {
-  animation: nomyMagin 1s forwards normal;
-}
+// @keyframes noMagin {
+//   from {
+//     margin-bottom: 320px;
+//   }
+//   to {
+//     margin-bottom: 0px;
+//   }
+// }
+// .box-card-no-margin {
+//   // animation: noMagin 1s forwards normal;
+// }
 .colorGroup() {
   background-image: -webkit-linear-gradient(bottom, #515cb9, #07144e);
   background-clip: text;
@@ -190,7 +191,7 @@ export default {
     padding: 0 18%;
     padding-bottom: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     .box-card-hover {
       transform: scale(1.1);
@@ -200,7 +201,7 @@ export default {
       display: block;
       width: 220px;
       height: 300px;
-      transition: 1s;
+      transition: 0.5s;
       margin: 16px;
       border-radius: 16px;
       cursor: pointer;
@@ -221,10 +222,9 @@ export default {
 
   .common-show {
     display: grid;
-    transition: 1s;
+    transition: 0.5s;
     overflow: hidden;
     padding: 0px 18%;
-    margin-top: 20px;
     row-gap: 20px;
     column-gap: 10px;
     justify-items: left;
@@ -234,6 +234,7 @@ export default {
     grid-template-rows: auto;
     .details-title {
       width: 300px;
+      padding: 30px 0;
       &-text {
         margin: 5px 0;
         font-size: 20px;
@@ -260,7 +261,7 @@ export default {
     }
     .details-item-group {
       width: 100%;
-      overflow: auto;
+      padding: 30px 0;
       .details-item {
         padding: 10px 30px;
         overflow: hidden;
@@ -287,14 +288,12 @@ export default {
   }
 
   .hover-test-show {
-    height: 222px;
-    padding: 30px 18% !important;
+    height: 300px;
     .common-show;
   }
   
   .test-show {
     height: 0px;
-    padding: 0px 18% !important;
     .common-show;
   }
 }

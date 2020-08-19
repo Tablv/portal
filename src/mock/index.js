@@ -1,18 +1,13 @@
 import Mock from 'mockjs'
-import Data from './indexData'
+import Data from './menuData'
 
-Mock.mock('/admin/homepageApi/getHomepageMenu', 'get', () => {
-  return {
-    success: true,
-    result: Data.menuList
-  }
-})
+Mock.mock('/admin/homepageApi/getHomepageMenu', 'get', Data.mockList);
 
 Mock.mock('/admin/homepageApi/getBannerList', 'get', () => {
   return {
     success: true,
     result: [
-      { url: Mock.Random.image(), key: "img1" },
+      { url: '/banner.jpg', key: "img1" },
       { url: Mock.Random.image(), key: "img2" }
     ]
   }

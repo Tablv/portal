@@ -2,7 +2,7 @@
   <el-container>
     <header-bar />
     <main-page />
-    <!-- <footer-bar /> -->
+    <footer-bar />
   </el-container>
 </template>
 
@@ -10,14 +10,14 @@
 
 import MainPage from './main/main.vue';
 import HeaderBar from './header/headerBar.vue'
-// import FooterBar from './footer/footerBar.vue'
+import FooterBar from './footer/footerBar.vue'
 
 export default {
   name: 'Layout',
   components: {
     MainPage,
-    HeaderBar
-    // FooterBar
+    HeaderBar,
+    FooterBar
   }
 }
 </script>

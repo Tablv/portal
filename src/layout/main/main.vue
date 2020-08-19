@@ -18,4 +18,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.el-main {
+  padding: 0; 
+  padding-top: 60px;
+}
+
 </style>

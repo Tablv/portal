@@ -8,32 +8,31 @@
       :active="item.code === activeCode"
     >
       <span @click.self="doClick(item)">{{item.name}}</span>
-      <template>
-        <div class="sub-menu" v-if="item.children">
-          <ul class="sub-menu-ul">
-            <li
-              class="sub-menu-ul-li"
-              v-for="childItem in item.children"
-              :key="childItem.code"
-            >
-              <span class="menu-text" @click.self="doClick(childItem)">{{childItem.name}}</span>
-              <template>
-                <div class="sub-menu-to" v-if="childItem.children">
-                  <ul class="sub-menu-ul-to">
-                    <li
-                      class="sub-menu-ul-li-to"
-                      v-for="childItemto in childItem.children"
-                      :key="childItemto.code"
-                    >
-                      <span class="menu-text" @click.self="doClick(childItemto)">{{childItemto.name}}</span>
-                    </li>
-                  </ul>
-                </div>
-              </template>
-            </li>
-          </ul>
-        </div>
-      </template>
+      <div class="sub-menu" v-if="item.children && item.children.length">
+        <ul class="sub-menu-ul">
+          <li
+            class="sub-menu-ul-li"
+            v-for="childItem in item.children"
+            :key="childItem.code"
+          >
+            <span class="menu-text" @click.self="doClick(childItem)">
+              {{childItem.name}}
+              <i class="el-icon-arrow-right el-icon--right" v-if="childItem.children && childItem.children.length"></i>
+            </span>
+            <div class="sub-menu-to" v-if="childItem.children && childItem.children.length">
+              <ul class="sub-menu-ul-to">
+                <li
+                  class="sub-menu-ul-li-to"
+                  v-for="childItemto in childItem.children"
+                  :key="childItemto.code"
+                >
+                  <span @click.self="doClick(childItemto)">{{childItemto.name}}</span>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
     </li>
   </ul>
 </template>
@@ -84,22 +83,33 @@ export default {
   }
   .menu-text {
     display: inline-block;
-    padding: 0 20px;
+    padding-right: 20px;
+    .el-icon-arrow-right {
+      line-height: 40px;
+      position: absolute;
+      right: 25px;
+    }
   }
   .sub-menu {
     display: none;
     position: absolute;
     text-align: left;
-    background: #d2d2d2;
+    margin-left: -25px;
+    min-width: 180px;
+    padding-right: 5px;
+    padding-top: 8px;
     white-space: nowrap;
-    box-shadow: 8px 8px 14px -18px #3492ff;
+    z-index: 9999px;
     .sub-menu-ul {
       list-style: none;
       padding: 10px 0;
-      color: #000;
+      color: #3a3a3a;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,.1);
       &-li {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 40px;
+        padding: 0 25px;
         &:hover {
           color: #ffffff;
           background: #166df7;
@@ -110,21 +120,24 @@ export default {
       }
       .sub-menu-to {
         display: none;
-        top: 0;
+        top: 8px;
         left: 100%;
-        min-width: 100%;
-        white-space: nowrap;
         height: 100%;
+        min-width: 180px;
+        white-space: nowrap;
         text-align: left;
         position: absolute;
+        z-index: 9999px;
         .sub-menu-ul-to {
-          color: #000;
+          color: #3a3a3a;
           padding: 10px 0;
           list-style: none;
-          background: rgb(240, 240, 240);
+          background: #fff;
+          box-shadow: 0 3px 10px rgba(0,0,0,.1);
           .sub-menu-ul-li-to {
-            font-size: 16px;
+            font-size: 15px;
             line-height: 40px;
+            padding: 0 25px;
             &:hover {
               color: #ffffff;
               background: #166df7;
