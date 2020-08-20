@@ -100,7 +100,6 @@ export default {
     white-space: nowrap;
     z-index: 9999px;
     .sub-menu-ul {
-      list-style: none;
       padding: 10px 0;
       color: #3a3a3a;
       background: #fff;
@@ -131,7 +130,6 @@ export default {
         .sub-menu-ul-to {
           color: #3a3a3a;
           padding: 10px 0;
-          list-style: none;
           background: #fff;
           box-shadow: 0 3px 10px rgba(0,0,0,.1);
           .sub-menu-ul-li-to {

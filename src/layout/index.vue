@@ -3,6 +3,7 @@
     <header-bar />
     <main-page />
     <footer-bar />
+    <aside-button />
   </el-container>
 </template>
 
@@ -11,13 +12,15 @@
 import MainPage from './main/main.vue';
 import HeaderBar from './header/headerBar.vue'
 import FooterBar from './footer/footerBar.vue'
+import asideButton from './asideButton/asideButton.vue'
 
 export default {
   name: 'Layout',
   components: {
     MainPage,
     HeaderBar,
-    FooterBar
+    FooterBar,
+    asideButton
   }
 }
 </script>

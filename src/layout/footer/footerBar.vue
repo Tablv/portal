@@ -1,31 +1,9 @@
 <template>
-  <el-footer height="520px">
+  <el-footer height="80px">
     <section class="footer-content">
-      <div class="footer-item-group" v-for="(itemList, index) in navList" :key="index">
-        <ul>
-          <li v-for="item in itemList" :key="item.id">
-            <a :href="item.url" target="_blank" v-html="item.name"></a>
-          </li>
-        </ul>
-      </div>
-      <section class="footer_record">
-        <img src="/favicon.ico" class="footer_record-logo" alt="logo">
-        <section class="footer-service">
-          <img src="/services_user_icon.png" alt="icon" class="footer-service-icon">
-          <div class="footer-service-group">
-            <ul>
-              <li>联系人：江晶晶</li>
-              <li>联系电话：17355633078</li>
-              <li>地址：南京市鼓楼区古平岗4号</li>
-            </ul>
-            <span style="line-height: 170px">
-              Copyright © 1998 - 2020 glaway. All Rights Reserved. 创新二部
-            </span>
-          </div>
-        </section>
-      </section>
+      <img src="/logo@white.png" class="footer-content-logo" alt="logo">
+      <span>Glaway 南京市鼓楼区古平岗 4 号院 53 号楼 4 楼</span>
     </section>
-    
   </el-footer>
 </template>
 
@@ -59,64 +37,22 @@ export default {
 </script>
 <style lang="less" scoped>
 .el-footer {
+  padding: 0;
+  display: flex;
+  align-items: center;
   background:#001432;
-  padding-top: 50px;
   .footer-content {
     width: 1200px;
     margin: 0 auto;
-    display: inline-flex;
-    justify-content: space-between;
-    .footer_record {
-      width: 500px;
-      display: flex;
-      font-size: 13px;
-      flex-direction: column;
-      align-items: center;
-      border-left: 1px solid #282e41;
-      &-logo {
-        filter: hue-rotate(-236deg) contrast(0%) brightness(200%);
-        margin-top: 50px;
-        margin-bottom: 50px;
-      }
-      .footer-service {
-        .footer-service-icon {
-          margin-bottom: 10px;
-        }
-        .footer-service-group {
-          color: #999999;
-        }
-      }
-    }
-    .footer-item-group {
-      display: inline-block;
-      text-align: left;
-      padding-top: 30px;
-      font-size: 13px;
-      .group-title {
-        display: block;
-        color: #fff;
-        margin-bottom: 20px;
-      }
-      
-    }
-  }
-  
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
     color: #999999;
-    li {
-      margin-bottom: 10px;
-      a {
-        color: #999999;
-        text-decoration: none;
-        padding: 10px 0;
-        display: inline-block;
-        &:hover {
-          color: #ffffff;
-        }
-      }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &-logo {
+      position: absolute;
+      left: 0;
+      width: 100px;
     }
   }
 }

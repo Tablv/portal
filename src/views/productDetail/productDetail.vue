@@ -68,9 +68,6 @@ export default {
       display: flex;
       justify-content: space-around;
       ul {
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
         li {
           padding: 16px 25px;
           display: inline-flex;
