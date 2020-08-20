@@ -96,7 +96,6 @@ export default {
     text-align: left;
     margin-left: -25px;
     min-width: 180px;
-    padding-right: 5px;
     padding-top: 8px;
     white-space: nowrap;
     z-index: 9999px;
@@ -124,6 +123,7 @@ export default {
         left: 100%;
         height: 100%;
         min-width: 180px;
+        padding-left: 5px;
         white-space: nowrap;
         text-align: left;
         position: absolute;

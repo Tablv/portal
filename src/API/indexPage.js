@@ -9,5 +9,13 @@ export function loadMenu() {
 }
 
 export function loadCardList() {
-  return request.get('/getSysConfigList')
+  return request.get('/getCardList')
+}
+
+export function loadFooterNavList() {
+  return request.get('getNavigationBarList')
+}
+
+export function loadeProductDetail(id) {
+  return request.get('getDetailById', { id })
 }

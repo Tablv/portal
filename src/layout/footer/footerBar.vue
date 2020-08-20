@@ -1,10 +1,11 @@
 <template>
-  <el-footer height="560px">
+  <el-footer height="500px">
     <section class="footer-content">
-      <div class="footer-item-group" v-for="item in 4" :key="item">
-        <span class="group-title">关于我们</span>
+      <div class="footer-item-group" v-for="(itemList, index) in navList" :key="index">
         <ul>
-          <li v-for="item in 9" :key="item">公司荣誉</li>
+          <li v-for="item in itemList" :key="item.id">
+            <a :href="item.url" target="_blank" v-html="item.name"></a>
+          </li>
         </ul>
       </div>
       <section class="footer_record">
@@ -15,7 +16,7 @@
             <ul>
               <li>地址：南京市鼓楼区古平岗4号</li>
             </ul>
-            <span style="line-height: 200px">
+            <span style="line-height: 170px">
               Copyright © 1998 - 2020 glaway. All Rights Reserved. 创新二部
             </span>
           </div>
@@ -27,20 +28,37 @@
 </template>
 
 <script>
-
+import { loadFooterNavList } from '@/API/indexPage.js'
 export default {
   name: 'FooterBar',
-  computed: {
-    key() {
-      return this.$route.path
+  data() {
+    return {
+      navList: null
     }
+  },
+  mounted() {
+    loadFooterNavList().then(res => {
+      if (res.success) {
+        this.navList = this.division(res.result, 8);
+      }
+    })
+  },
+  methods: {
+    division(arr, length) {
+      let index = 0;
+      let newArray = []
+      while (index < arr.length) {
+        newArray.push(arr.splice(index, length))
+      }
+      return newArray;
+    },
   }
 }
 </script>
 <style lang="less" scoped>
 .el-footer {
   background:#001432;
-  padding-top: 72px;
+  padding-top: 50px;
   .footer-content {
     width: 1200px;
     margin: 0 auto;
@@ -88,6 +106,18 @@ export default {
     color: #999999;
     li {
       margin-bottom: 10px;
+      a {
+        color: #999999;
+        text-decoration: none;
+        padding: 10px 0;
+        display: inline-block;
+        &:hover {
+          color: #ffffff;
+        }
+        &:visited {
+          color: #ffffff;
+        }
+      }
     }
   }
 }

@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import { loadImg, loadCardList } from '@/API/indexPage.js'
+import { loadeProductDetail } from '@/API/indexPage.js'
 
 export default {
-  name: 'index',
+  name: 'productDetail',
   data() {
     return {
       titleContent: "",
@@ -38,11 +38,15 @@ export default {
     }
   },
   mounted() {
-    this.titleContent = this.$route.params.content;
-    console.log(this.$route)
-  },
-  methods: {
-    
+    if (this.$route.params.content) {
+      this.titleContent = this.$route.params.content;
+    } else {
+      loadeProductDetail(this.$route.query.id).then(res => {
+        if (res.success) {
+          this.titleContent = res.result.content
+        }
+      })
+    }
   }
 }
 </script>
@@ -76,18 +80,22 @@ export default {
           font-size: 13px;
           margin: 3px 10px;
           .tab-icon {
-            font-size: 45px;
+            font-size: 50px;
             padding-bottom: 10px;
           }
           &:hover {
+            color: #166fde;
             box-sizing: content-box;
-            border-bottom: 3px brown solid;
+            border-bottom: 3px #166fde solid;
             margin-bottom: 0px;
+            .tab-icon {
+              color: #166fde;
+            }
           }
         }
         [avtive] {
           box-sizing: content-box;
-          border-bottom: 3px brown solid;
+          border-bottom: 3px #166fde solid;
           margin-bottom: 0px;
         }
       }

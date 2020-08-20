@@ -57,13 +57,13 @@ export default {
   },
   methods: {
     handleClick(event, item) {
-      let { url, code, content } = item;
-      this.$router.push({name: 'productDetail', params: { content }})
-      if (!url) return;
-      const urlType = /^\/|http|https/i;
-      const preflag = urlType.test(url);
-      url = preflag ? url : ("//" + url);
-      window.open(url, code);
+      let { content, id } = item;
+      this.$router.push({name: 'productDetail', params: { content }, query: { id }})
+      // if (!url) return;
+      // const urlType = /^\/|http|https/i;
+      // const preflag = urlType.test(url);
+      // url = preflag ? url : ("//" + url);
+      // window.open(url, code);
     }
   }
 }
@@ -109,45 +109,17 @@ export default {
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
      
       &:hover {
-        background-image: linear-gradient(0deg, #001432, #515cb9);
+        background-image: linear-gradient(0deg, #4c9cff, #166fde);
         transform: scale(1.1);
-        &::after {
-          content: "";
-          border-radius: 16px;
-          position: absolute;
-          display: block;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.3);
-        }
         .box-card-button {
           display: block;
           background-image: linear-gradient(0deg, #ffffff);
-          &::after {
-            content: "";
-            top: 0px;
-            left: 0px;
-            position: absolute;
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-          }
-            &:hover {
-            border: none;
-            color: #001432;
-            background: #fff;
-             cursor: pointer;
-            &::after {
-              background: rgba(240, 240, 240, 0.3);
-            }
-          }
         }
         .box-card-font {
-          background-image: linear-gradient(0deg, #fff);
+          background-image: linear-gradient(0deg, #ffffff);
         }
         .box-card-font-icon {
-          background-image: linear-gradient(0deg, #fff);
+          background-image: linear-gradient(0deg, #ffffff);
         }
       }
       &-font {
@@ -166,7 +138,7 @@ export default {
       &-font-icon {
         .colorGroup();
         font-size: 80px;
-        background-image: linear-gradient(0deg, #515cb9, #f500297a);
+        background-image: linear-gradient(0deg, #0a58b9, #4c22f194);
       }
     }
   }
