@@ -5,8 +5,8 @@
       @click.self="doClick(item)"
       v-for="item in menuList"
       :key="item.code"
-      :active="item.code === activeCode"
     >
+      <!-- :active="item.code === activeCode" -->
       <span @click.self="doClick(item)">{{item.name}}</span>
       <div class="sub-menu" v-if="item.children && item.children.length">
         <ul class="sub-menu-ul">

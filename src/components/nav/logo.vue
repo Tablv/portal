@@ -1,13 +1,18 @@
 <template>
   <div class="logo-bar">
-    <div class="logo-img"></div>
+    <div class="logo-img" @click="handClick"></div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'logoBar'
+  name: 'logoBar',
+  methods: {
+    handClick() {
+      this.$router.push({ name: 'index' })
+    }
+  }
 }
 </script>
 

@@ -17,5 +17,5 @@ export function loadFooterNavList() {
 }
 
 export function loadeProductDetail(id) {
-  return request.get('getDetailById', { id })
+  return request.get(`getDetailById/${id }`)
 }

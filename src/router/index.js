@@ -16,7 +16,7 @@ export const constantRoutes = [
       component: () => import('@/views/index/index.vue')
     },
     {
-      path: '/productDetail',
+      path: '/productDetail/:id',
       name: 'productDetail',
       component: () => import('@/views/productDetail/productDetail.vue')
     }]

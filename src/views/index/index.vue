@@ -26,7 +26,7 @@
       >
         <i :class="item.iconClass" class="box-card-font-icon"></i>
         <h4 class="box-card-font">{{item.name}}</h4>
-        <el-button class="box-card-button" @click="handleClick($event, item)">进入演示系统</el-button>
+        <el-button class="box-card-button" @click="handleClick($event, item)">了解详情</el-button>
       </div>
     </section>
   </div>
@@ -58,7 +58,7 @@ export default {
   methods: {
     handleClick(event, item) {
       let { content, id } = item;
-      this.$router.push({name: 'productDetail', params: { content }, query: { id }})
+      this.$router.push({path: `productDetail/${id}`, params: { content }})
       // if (!url) return;
       // const urlType = /^\/|http|https/i;
       // const preflag = urlType.test(url);

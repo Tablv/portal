@@ -1,5 +1,5 @@
 <template>
-  <el-footer height="500px">
+  <el-footer height="520px">
     <section class="footer-content">
       <div class="footer-item-group" v-for="(itemList, index) in navList" :key="index">
         <ul>
@@ -14,6 +14,8 @@
           <img src="/services_user_icon.png" alt="icon" class="footer-service-icon">
           <div class="footer-service-group">
             <ul>
+              <li>联系人：江晶晶</li>
+              <li>联系电话：17355633078</li>
               <li>地址：南京市鼓楼区古平岗4号</li>
             </ul>
             <span style="line-height: 170px">
@@ -112,9 +114,6 @@ export default {
         padding: 10px 0;
         display: inline-block;
         &:hover {
-          color: #ffffff;
-        }
-        &:visited {
           color: #ffffff;
         }
       }

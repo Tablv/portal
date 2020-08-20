@@ -38,15 +38,11 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.params.content) {
-      this.titleContent = this.$route.params.content;
-    } else {
-      loadeProductDetail(this.$route.query.id).then(res => {
-        if (res.success) {
-          this.titleContent = res.result.content
-        }
-      })
-    }
+    loadeProductDetail(this.$route.params.id).then(res => {
+      if (res.success) {
+        this.titleContent = res.result.content
+      }
+    })
   }
 }
 </script>
@@ -61,9 +57,11 @@ export default {
     color: #07144e;
     margin: 100px auto;
     width: 1200px;
+    text-align: auto;
+    text-align: -webkit-auto;
   }
   &-content {
-    padding: 100px 0;
+    padding-bottom: 100px;
     &-tab {
       width: 1200px;
       margin: 0px auto;
