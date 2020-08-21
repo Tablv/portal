@@ -1,6 +1,8 @@
 <template>
   <div class="logo-bar">
-    <div class="logo-img" @click="handClick"></div>
+    <div class="logo-img-contianer" @click="handClick">
+      <img src="/logo@white.png" alt="logo" class="logo-img">
+    </div>
   </div>
 </template>
 
@@ -20,14 +22,15 @@ export default {
 .logo-bar {
   display: flex;
   align-items: center;
-  justify-items: center;
-  .logo-img {
-    height: 60%;
-    width: 100%;
-    background: url(/logo@white.png) 0% 100% no-repeat;
-    background-size: 90% 80%;
-    filter: hue-rotate(-236deg) contrast(0%) brightness(200%);
-    cursor: pointer;
+  justify-content: center;
+  cursor: pointer;
+  .logo-img-contianer {
+    display: inline-flex;
+    justify-content: center;
+    .logo-img {
+      width: 90%;
+      cursor: pointer;
+    }
   }
 }
 </style>
