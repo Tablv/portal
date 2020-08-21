@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { loadFooterNavList } from '@/API/indexPage.js'
+// import { loadFooterNavList } from '@/API/indexPage.js'
 export default {
   name: 'FooterBar',
   data() {
@@ -16,13 +16,13 @@ export default {
       navList: null
     }
   },
-  mounted() {
-    loadFooterNavList().then(res => {
-      if (res.success) {
-        this.navList = this.division(res.result, 8);
-      }
-    })
-  },
+  // mounted() {
+  //   loadFooterNavList().then(res => {
+  //     if (res.success) {
+  //       this.navList = this.division(res.result, 8);
+  //     }
+  //   })
+  // },
   methods: {
     division(arr, length) {
       let index = 0;

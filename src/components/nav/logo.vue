@@ -28,7 +28,7 @@ export default {
     display: inline-flex;
     justify-content: center;
     .logo-img {
-      width: 90%;
+      width: 70%;
       cursor: pointer;
     }
   }
