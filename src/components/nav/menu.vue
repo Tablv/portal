@@ -2,20 +2,20 @@
   <ul class="menu-bar">
     <li
       class="menu-bar-item"
-      @click.self="doClick(item)"
+      @click="doClick(item)"
       v-for="item in menuList"
       :key="item.code"
     >
-      <!-- :active="item.code === activeCode" -->
-      <span @click.self="doClick(item)">{{item.name}}</span>
+      <span>{{item.name}}</span>
       <div class="sub-menu" v-if="item.children && item.children.length">
         <ul class="sub-menu-ul">
           <li
             class="sub-menu-ul-li"
             v-for="childItem in item.children"
             :key="childItem.code"
+            @click="doClick(childItem)"
           >
-            <span class="menu-text" @click.self="doClick(childItem)">
+            <span class="menu-text">
               {{childItem.name}}
               <i class="el-icon-arrow-right el-icon--right" v-if="childItem.children && childItem.children.length"></i>
             </span>
@@ -25,8 +25,9 @@
                   class="sub-menu-ul-li-to"
                   v-for="childItemto in childItem.children"
                   :key="childItemto.code"
+                  @click="doClick(childItemto)"
                 >
-                  <span @click.self="doClick(childItemto)">{{childItemto.name}}</span>
+                  <span>{{childItemto.name}}</span>
                 </li>
               </ul>
             </div>
@@ -67,6 +68,7 @@ export default {
   },
   methods: {
     doClick(route) {
+      if (!route.url) return;
       const urlType = /^\/|http|https/i;
       const preflag = urlType.test(route.url);
       const targetType = this.targetType[route.popout];

@@ -22,11 +22,6 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/product',
-    name: '产品服务',
-    component: () => import('@/views/product.vue')
-  },
-  {
     path: '/404',
     name: '404',
     component: () => import('@/views/404.vue')
